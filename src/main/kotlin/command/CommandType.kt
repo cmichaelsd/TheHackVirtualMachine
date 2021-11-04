@@ -1,6 +1,6 @@
-package parser
+package command
 
-enum class Command {
+enum class CommandType {
     C_ARITHMETIC,
     C_PUSH,
     C_POP,

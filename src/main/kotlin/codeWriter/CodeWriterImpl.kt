@@ -1,6 +1,6 @@
 package codeWriter
 
-import parser.Command
+import command.CommandType
 import java.io.File
 
 class CodeWriterImpl(file: File) : CodeWriter {
@@ -16,12 +16,14 @@ class CodeWriterImpl(file: File) : CodeWriter {
     /**
      * Writes to the output file the assembly code that implements the given arithmetic-logical command.
      *
-     * @param command the command to be written as assembly code
+     * @param commandType the command to be written as assembly code
      * @param segment the prefix to determine scoping
      * @param index   which index in the stack arithmetic to emulate
      */
-    override fun writePushPop(command: Command, segment: String, index: Int) {
-        TODO("Not yet implemented")
+    override fun writePushPop(commandType: CommandType, segment: String, index: Int) {
+        if (commandType == CommandType.C_PUSH) {
+
+        }
     }
 
     /**

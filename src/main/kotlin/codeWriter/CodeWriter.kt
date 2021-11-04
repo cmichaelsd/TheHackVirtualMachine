@@ -1,9 +1,9 @@
 package codeWriter
 
-import parser.Command
+import command.CommandType
 
 interface CodeWriter {
     fun writeArithmetic(command: String)
-    fun writePushPop(command: Command, segment: String, index: Int)
+    fun writePushPop(commandType: CommandType, segment: String, index: Int)
     fun close()
 }

@@ -1,0 +1,4 @@
+package virtualMachineTranslator
+
+class VirtualMachineTranslator {
+}
