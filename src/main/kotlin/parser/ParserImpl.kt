@@ -84,7 +84,7 @@ class ParserImpl(file: File) : Parser {
 
     /**
      * Returns the first argument of the current command.
-     * In the case of C_ARITHMETIC, the command itself (add, sub, etc) is returned.
+     * In the case of C_ARITHMETIC, the command itself (add, sub, etc.) is returned.
      * Should not be called if the current command is C_RETURN.
      *
      * @return String
@@ -110,5 +110,13 @@ class ParserImpl(file: File) : Parser {
         if (arg1() == "constant" && argumentTwo in 0..32767) return argumentTwo
         if (arg1() == "constant" && argumentTwo !in 0..32767) throw ConstantValueException("Illegal value at line $currentLine")
         return argumentTwo
+    }
+
+    /**
+     * Resets properties to initial values.
+     */
+    fun close() {
+        currentLine = -1
+        currentInstruction = listOf()
     }
 }
