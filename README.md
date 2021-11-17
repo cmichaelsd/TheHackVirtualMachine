@@ -28,7 +28,7 @@ This project consists of three modules which interact in order to translate byte
 | writePushPop | command (C_PUSH or C_POP), segment (string), index (int) | - | Writes to the output file the assembly code that implements the given arithmetic-logical command. |
 | close | - | - | Closes the output file / stream. |
 
-### Virtual Machine translator
+### Virtual Machine Translator
 No API provided for this module.
 
 ### Testing

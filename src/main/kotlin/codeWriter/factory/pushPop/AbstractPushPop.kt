@@ -1,4 +1,4 @@
-package codeWriter.writer
+package codeWriter.factory.pushPop
 
 import segment.Segment
 
@@ -12,8 +12,8 @@ abstract class AbstractPushPop(private val fileName: String) {
         }
     }
 
-    fun setAddressToContext(segment: String, index: Int) {
-        arrayOf(
+    fun setAddressToContext(segment: String, index: Int): List<String> {
+        return listOf(
             "@$index",
             "D=A",
             "@${Segment.getTranslation(segment)}",
@@ -21,7 +21,7 @@ abstract class AbstractPushPop(private val fileName: String) {
         )
     }
 
-    fun setStackPointerMemoryToAddressAndDataToMemory() {
-        arrayOf("@SP", "A=M", "M=D")
+    fun setStackPointerMemoryToAddressAndDataToMemory(): List<String> {
+        return listOf("@SP", "A=M", "M=D")
     }
 }
