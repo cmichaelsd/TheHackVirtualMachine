@@ -6,7 +6,9 @@ import segment.SegmentException
 import java.io.File
 
 class ParserImpl(file: File) : Parser {
-
+    /**
+     * Virtual machine file to parse instructions from.
+     */
     private var vmInstructions: List<String> = file.useLines { it.toList() }
 
     /**

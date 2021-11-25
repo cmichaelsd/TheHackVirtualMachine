@@ -14,5 +14,5 @@ interface Parsable {
      * @param  command a string representing a command
      * @return Boolean
      */
-    fun has(command: String): Boolean = Push.validCommand.contains(command)
+    fun has(command: String): Boolean = validCommand.contains(command)
 }

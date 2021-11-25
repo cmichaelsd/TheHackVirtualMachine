@@ -1,8 +1,8 @@
 package codeWriter
 
-import codeWriter.factory.arithmeticLogical.BinomialFactoryImpl
-import codeWriter.factory.pushPop.PopFactoryImpl
-import codeWriter.factory.pushPop.PushFactoryImpl
+import codeWriter.subroutines.arithmeticLogical.BinomialImpl
+import codeWriter.subroutines.stack.PopImpl
+import codeWriter.subroutines.stack.PushImpl
 import command.CommandType
 import java.io.File
 
@@ -19,10 +19,10 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      */
     override fun writeArithmetic(command: String) {
         when(command) {
-            "add" -> writeToOutputFile(BinomialFactoryImpl().create("D=D+M"))
-            "sub" -> writeToOutputFile(BinomialFactoryImpl().create("D=D-M"))
-            "and" -> writeToOutputFile(BinomialFactoryImpl().create("D=D&M"))
-            "or"  -> writeToOutputFile(BinomialFactoryImpl().create("D=D|M"))
+            "add" -> writeToOutputFile(BinomialImpl().create("D=D+M"))
+            "sub" -> writeToOutputFile(BinomialImpl().create("D=D-M"))
+            "and" -> writeToOutputFile(BinomialImpl().create("D=D&M"))
+            "or"  -> writeToOutputFile(BinomialImpl().create("D=D|M"))
         }
     }
 
@@ -34,8 +34,8 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param index   which index in the stack arithmetic to emulate
      */
     override fun writePushPop(commandType: CommandType, segment: String, index: Int) {
-        if (commandType == CommandType.C_PUSH) writeToOutputFile(PushFactoryImpl(fileName).create(segment, index))
-        if (commandType == CommandType.C_POP) writeToOutputFile(PopFactoryImpl(fileName).create(segment, index))
+        if (commandType == CommandType.C_PUSH) writeToOutputFile(PushImpl(fileName).create(segment, index))
+        if (commandType == CommandType.C_POP) writeToOutputFile(PopImpl(fileName).create(segment, index))
     }
 
     /**

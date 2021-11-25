@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="parser.ParserImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-25T05:27:15" hostname="LLAMA" time="0.043">
+  <properties/>
+  <testcase name="arg2" classname="parser.ParserImplTest" time="0.043"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
