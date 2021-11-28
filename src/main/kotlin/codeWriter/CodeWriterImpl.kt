@@ -30,8 +30,8 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * Writes to the output file the assembly code that implements the given arithmetic-logical command.
      *
      * @param commandType the command to be written as assembly code
-     * @param segment the prefix to determine scoping
-     * @param index   which index in the stack arithmetic to emulate
+     * @param segment     the prefix to determine scoping
+     * @param index       which index in the stack arithmetic to emulate
      */
     override fun writePushPop(commandType: CommandType, segment: String, index: Int) {
         if (commandType == CommandType.C_PUSH) writeToOutputFile(PushImpl(fileName).create(segment, index))

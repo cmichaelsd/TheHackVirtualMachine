@@ -36,6 +36,7 @@ internal class ParserImplTest {
         "push temp 6",
         "add"
     )
+
     /**
      * A test instantiation of ParserImpl class.
      */
