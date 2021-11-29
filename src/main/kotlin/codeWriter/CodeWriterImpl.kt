@@ -6,11 +6,13 @@ import codeWriter.subroutines.stack.PushImpl
 import command.CommandType
 import java.io.File
 
-class CodeWriterImpl(private val outputFile: File) : CodeWriter {
+class CodeWriterImpl(outputFile: File) : CodeWriter {
     /**
      * The name of the output file to be uses in assembly language generation.
      */
     private val fileName = outputFile.nameWithoutExtension
+
+    private val bufferedWriter = outputFile.bufferedWriter()
 
     /**
      * Writes to the output file the assembly code that implements the given arithmetic-logical command.
@@ -42,15 +44,10 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * Closes the output file / stream.
      */
     override fun close() {
-        TODO("Not yet implemented")
+        bufferedWriter.close()
     }
 
     private fun writeToOutputFile(list: List<String>) {
-        outputFile.bufferedWriter().use { writer ->
-            list.forEach { line ->
-                writer.write(line)
-                writer.newLine()
-            }
-        }
+        list.forEach { bufferedWriter.appendLine(it) }
     }
 }
