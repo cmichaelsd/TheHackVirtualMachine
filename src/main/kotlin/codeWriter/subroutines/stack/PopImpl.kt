@@ -31,6 +31,6 @@ class PopImpl(fileName: String) :
     }
 
     private fun decrementStackPointer(): List<String> {
-        return listOf("@SP", "M=M-1", "AD=M")
+        return listOf("@SP", "AM=M-1", "D=M")
     }
 }

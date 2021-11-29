@@ -21,10 +21,10 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
      */
     override fun writeArithmetic(command: String) {
         when(command) {
-            "add" -> writeToOutputFile(BinomialImpl().create("D=D+M"))
-            "sub" -> writeToOutputFile(BinomialImpl().create("D=D-M"))
-            "and" -> writeToOutputFile(BinomialImpl().create("D=D&M"))
-            "or"  -> writeToOutputFile(BinomialImpl().create("D=D|M"))
+            "add" -> writeToOutputFile(BinomialImpl().create("M=D+M"))
+            "sub" -> writeToOutputFile(BinomialImpl().create("M=D-M"))
+            "and" -> writeToOutputFile(BinomialImpl().create("M=D&M"))
+            "or"  -> writeToOutputFile(BinomialImpl().create("M=D|M"))
         }
     }
 

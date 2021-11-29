@@ -5,9 +5,9 @@ import segment.Segment
 abstract class AbstractStack(private val fileName: String) {
     fun getAddress(segment: String, index: Int): String {
         return when(segment) {
-            "pointer" -> if (index == 0) "THIS" else "THAT"
+            "pointer" -> "R${3 + index}"
             "static" -> "$fileName.$index"
-            "temp" -> "${5 + index}"
+            "temp" -> "R${5 + index}"
             else -> ""
         }
     }
