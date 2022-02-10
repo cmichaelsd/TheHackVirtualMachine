@@ -77,11 +77,13 @@ class ParserImpl(file: File) : Parser {
     @Throws(CommandTypeException::class)
     override fun commandType(): CommandType {
         val command = currentInstruction[0]
-        if (Push.has(command)) return Push.getType()
-        if (Pop.has(command)) return Pop.getType()
-        if (Arithmetic.has(command)) return Arithmetic.getType()
-        if (Logical.has(command)) return Logical.getType()
-        throw CommandTypeException("Illegal command type token at line $currentLine")
+        return when {
+            Push.has(command)       -> Push.getType()
+            Pop.has(command)        -> Pop.getType()
+            Arithmetic.has(command) -> Arithmetic.getType()
+            Logical.has(command)    -> Logical.getType()
+            else                    -> throw CommandTypeException("Illegal command type token at line $currentLine")
+        }
     }
 
     /**

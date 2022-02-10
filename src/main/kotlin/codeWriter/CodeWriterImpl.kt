@@ -14,6 +14,10 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
 
     private val bufferedWriter = outputFile.bufferedWriter()
 
+    init {
+        writeToOutputFile(listOf("@256", "D=A", "@SP", "M=D"))
+    }
+
     /**
      * Writes to the output file the assembly code that implements the given arithmetic-logical command.
      *
@@ -22,7 +26,7 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
     override fun writeArithmetic(command: String) {
         when(command) {
             "add" -> writeToOutputFile(BinomialImpl().create("M=D+M"))
-            "sub" -> writeToOutputFile(BinomialImpl().create("M=D-M"))
+            "sub" -> writeToOutputFile(BinomialImpl().create("M=M-D"))
             "and" -> writeToOutputFile(BinomialImpl().create("M=D&M"))
             "or"  -> writeToOutputFile(BinomialImpl().create("M=D|M"))
         }

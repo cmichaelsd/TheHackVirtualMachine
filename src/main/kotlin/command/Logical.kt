@@ -2,7 +2,7 @@ package command
 
 object Logical : Command {
     override val validCommand: List<String> = listOf(
-        "eg",
+        "eq",
         "gt",
         "lt",
         "and",
