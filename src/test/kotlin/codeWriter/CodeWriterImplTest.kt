@@ -1,6 +1,6 @@
 package codeWriter
 
-import codeWriter.subroutines.arithmeticLogical.BinomialImpl
+import codeWriter.subroutines.arithmeticLogical.Binomial
 import codeWriter.subroutines.stack.PopImpl
 import codeWriter.subroutines.stack.PushImpl
 import org.junit.Assert.assertArrayEquals
@@ -30,7 +30,7 @@ internal class CodeWriterImplTest {
                 "M=M+1"
             )
 
-            val actual = BinomialImpl().create(binomial).toTypedArray()
+            val actual = Binomial().create(binomial).toTypedArray()
             assertArrayEquals(expected, actual)
         }
     }

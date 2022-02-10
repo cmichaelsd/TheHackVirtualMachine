@@ -1,10 +1,13 @@
 package codeWriter
 
-import codeWriter.subroutines.arithmeticLogical.BinomialImpl
+import codeWriter.subroutines.arithmeticLogical.Binomial
+import codeWriter.subroutines.arithmeticLogical.Comparison
+import codeWriter.subroutines.arithmeticLogical.Singular
 import codeWriter.subroutines.stack.PopImpl
 import codeWriter.subroutines.stack.PushImpl
 import command.CommandType
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 
 class CodeWriterImpl(outputFile: File) : CodeWriter {
     /**
@@ -13,6 +16,8 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
     private val fileName = outputFile.nameWithoutExtension
 
     private val bufferedWriter = outputFile.bufferedWriter()
+
+    private var sequence = AtomicInteger(-1)
 
     init {
         writeToOutputFile(listOf("@256", "D=A", "@SP", "M=D"))
@@ -25,10 +30,17 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
      */
     override fun writeArithmetic(command: String) {
         when(command) {
-            "add" -> writeToOutputFile(BinomialImpl().create("M=D+M"))
-            "sub" -> writeToOutputFile(BinomialImpl().create("M=M-D"))
-            "and" -> writeToOutputFile(BinomialImpl().create("M=D&M"))
-            "or"  -> writeToOutputFile(BinomialImpl().create("M=D|M"))
+            "add" -> writeToOutputFile(Binomial.create("M=D+M"))
+            "sub" -> writeToOutputFile(Binomial.create("M=M-D"))
+            "and" -> writeToOutputFile(Binomial.create("M=D&M"))
+            "or"  -> writeToOutputFile(Binomial.create("M=D|M"))
+
+            "neg" -> writeToOutputFile(Singular.create("M=-M"))
+            "not" -> writeToOutputFile(Singular.create("M=!M"))
+
+            "eq"  -> writeToOutputFile(Comparison(sequence).create("D;JEQ"))
+            "lt"  -> writeToOutputFile(Comparison(sequence).create("D;JLT"))
+            "gt"  -> writeToOutputFile(Comparison(sequence).create("D;JGT"))
         }
     }
 

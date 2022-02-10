@@ -1,11 +1,8 @@
 package codeWriter.subroutines.arithmeticLogical
 
-class BinomialImpl: Binomial {
+object Singular : Operation {
     override fun create(operation: String): List<String> {
         return listOf(
-            "@SP",
-            "AM=M-1",
-            "D=M",
             "@SP",
             "AM=M-1",
             operation,
