@@ -13,7 +13,7 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
     /**
      * The name of the output file to be uses in assembly language generation.
      */
-    private val fileName = outputFile.nameWithoutExtension
+    private var fileName: String? = null // outputFile.nameWithoutExtension
 
     private val bufferedWriter = outputFile.bufferedWriter()
 
@@ -21,6 +21,15 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
 
     init {
         writeToOutputFile(listOf("@256", "D=A", "@SP", "M=D"))
+    }
+
+    /**
+     * Informs that the translation of a new VM file has started (called by the VMTranslator).
+     *
+     * @param fileName the name for the compiled file
+     */
+    override fun setFileName(fileName: String) {
+        TODO("Not yet implemented")
     }
 
     /**
@@ -54,6 +63,60 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
     override fun writePushPop(commandType: CommandType, segment: String, index: Int) {
         if (commandType == CommandType.C_PUSH) writeToOutputFile(PushImpl(fileName).create(segment, index))
         if (commandType == CommandType.C_POP) writeToOutputFile(PopImpl(fileName).create(segment, index))
+    }
+
+    /**
+     * Writes assembly code that effects the label command.
+     *
+     * @param label the label for the label command
+     */
+    override fun writeLabel(label: String) {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Writes assembly code that effects the goto command.
+     *
+     * @param label the label for the goto command
+     */
+    override fun writeGoTo(label: String) {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Writes assembly code that effects the if-goto command.
+     *
+     * @param label the label for the if-goto command
+     */
+    override fun writeIf(label: String) {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Writes assembly code that effects the function command.
+     *
+     * @param functionName the name for the function to write
+     * @param nVars        the number of variables for the function
+     */
+    override fun writeFunction(functionName: String, nVars: Int) {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Writes assembly code that effects the call command.
+     *
+     * @param functionName the name for the function to call
+     * @param nArgs        the number of arguments for the function
+     */
+    override fun writeCall(functionName: String, nArgs: Int) {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Writes assembly code that effects the return command.
+     */
+    override fun writeReturn() {
+        TODO("Not yet implemented")
     }
 
     /**
