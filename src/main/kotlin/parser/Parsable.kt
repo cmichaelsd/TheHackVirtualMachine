@@ -1,7 +1,5 @@
 package parser
 
-import command.Push
-
 interface Parsable {
     /**
      * A list containing all valid commands for the current command type.

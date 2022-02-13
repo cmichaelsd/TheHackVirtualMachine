@@ -3,7 +3,12 @@ package codeWriter
 import codeWriter.subroutines.arithmeticLogical.Binomial
 import codeWriter.subroutines.arithmeticLogical.Comparison
 import codeWriter.subroutines.arithmeticLogical.Singular
+import codeWriter.subroutines.branching.GoTo
+import codeWriter.subroutines.branching.If
+import codeWriter.subroutines.branching.Label
 import codeWriter.subroutines.frames.Call
+import codeWriter.subroutines.frames.Function
+import codeWriter.subroutines.frames.Return
 import codeWriter.subroutines.stack.PopImpl
 import codeWriter.subroutines.stack.PushImpl
 import command.CommandType
@@ -83,7 +88,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param label the label for the label command
      */
     override fun writeLabel(label: String) {
-        TODO("Not yet implemented")
+        writeToOutputFile(Label.create(label))
     }
 
     /**
@@ -92,7 +97,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param label the label for the goto command
      */
     override fun writeGoTo(label: String) {
-        TODO("Not yet implemented")
+        writeToOutputFile(GoTo.create(label))
     }
 
     /**
@@ -101,7 +106,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param label the label for the if-goto command
      */
     override fun writeIf(label: String) {
-        TODO("Not yet implemented")
+        writeToOutputFile(If.create(label))
     }
 
     /**
@@ -111,7 +116,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param nVars        the number of variables for the function
      */
     override fun writeFunction(functionName: String, nVars: Int) {
-        TODO("Not yet implemented")
+        writeToOutputFile(Function.create(functionName, nVars))
     }
 
     /**
@@ -121,14 +126,14 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param nArgs        the number of arguments for the function
      */
     override fun writeCall(functionName: String, nArgs: Int) {
-        TODO("Not yet implemented")
+        writeToOutputFile(Call(sequence).create(functionName, nArgs))
     }
 
     /**
      * Writes assembly code that effects the return command.
      */
     override fun writeReturn() {
-        TODO("Not yet implemented")
+        writeToOutputFile(Return.create())
     }
 
     /**
@@ -149,7 +154,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
         result.appendLine("@SP")
         result.appendLine("M=D")
         writeToOutputFile(result.toString())
-//        writeToOutputFile(Call(sequence).create("Sys.init", 0))
+        writeToOutputFile(Call(sequence).create("Sys.init", 0))
     }
 
     @Throws(IOException::class)

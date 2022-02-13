@@ -42,18 +42,13 @@ object VirtualMachineTranslator {
             parserImpl.advance()
             when (val commandType = parserImpl.commandType()) {
                 CommandType.C_PUSH,
-                CommandType.C_POP,
-//                CommandType.C_FUNCTION,
-//                CommandType.C_CALL
-                -> {
-                    codeWriter.writePushPop(commandType, parserImpl.arg1(), parserImpl.arg2())
-                }
-                CommandType.C_ARITHMETIC -> {
-                    codeWriter.writeArithmetic(parserImpl.arg1())
-                }
-                CommandType.C_IF -> {
-
-                }
+                CommandType.C_POP -> codeWriter.writePushPop(commandType, parserImpl.arg1(), parserImpl.arg2())
+                CommandType.C_ARITHMETIC -> codeWriter.writeArithmetic(parserImpl.arg1())
+                CommandType.C_LABEL -> codeWriter.writeLabel(parserImpl.arg1())
+                CommandType.C_GOTO -> codeWriter.writeGoTo(parserImpl.arg1())
+                CommandType.C_IF -> codeWriter.writeIf(parserImpl.arg1())
+                CommandType.C_FUNCTION -> codeWriter.writeFunction(parserImpl.arg1(), parserImpl.arg2())
+                CommandType.C_RETURN -> codeWriter.writeReturn()
                 else -> {}
             }
         }

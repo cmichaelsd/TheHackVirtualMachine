@@ -1,6 +1,7 @@
 package parser
 
 import command.*
+import command.Function
 import segment.Segment
 import segment.SegmentException
 import java.io.File
@@ -82,6 +83,11 @@ class ParserImpl(file: File) : Parser {
             Pop.has(command)        -> Pop.getType()
             Arithmetic.has(command) -> Arithmetic.getType()
             Logical.has(command)    -> Logical.getType()
+            Label.has(command)      -> Label.getType()
+            GoTo.has(command)       -> GoTo.getType()
+            If.has(command)         -> If.getType()
+            Function.has(command)   -> Function.getType()
+            Return.has(command)     -> Return.getType()
             else                    -> throw CommandTypeException("Illegal command type token at line $currentLine")
         }
     }
