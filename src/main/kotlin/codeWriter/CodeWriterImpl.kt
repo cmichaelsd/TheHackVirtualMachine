@@ -154,7 +154,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
         result.appendLine("@SP")
         result.appendLine("M=D")
         writeToOutputFile(result.toString())
-        writeToOutputFile(Call(sequence).create("Sys.init", 0))
+//        writeToOutputFile(Call(sequence).create("Sys.init", 0))
     }
 
     @Throws(IOException::class)

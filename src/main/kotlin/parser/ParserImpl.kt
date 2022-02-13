@@ -64,6 +64,7 @@ class ParserImpl(file: File) : Parser {
         }
 
         currentInstruction = instruction
+            .trim()
             .replace("\\s+", " ")
             .split(" ")
     }
@@ -102,9 +103,17 @@ class ParserImpl(file: File) : Parser {
      */
     @Throws(SegmentException::class)
     override fun arg1(): String {
-        if (commandType() == CommandType.C_ARITHMETIC) return currentInstruction[0]
-        if (Segment.has(currentInstruction[1])) return currentInstruction[1]
-        throw SegmentException("Illegal argument token at line $currentLine")
+        return when (commandType()) {
+            CommandType.C_ARITHMETIC -> currentInstruction[0]
+
+            CommandType.C_PUSH,
+            CommandType.C_POP        -> {
+                if (Segment.has(currentInstruction[1])) return currentInstruction[1]
+                throw SegmentException("Illegal argument token at line $currentLine")
+            }
+
+            else                     -> currentInstruction[1]
+        }
     }
 
     /**
@@ -117,8 +126,10 @@ class ParserImpl(file: File) : Parser {
     @Throws(ConstantValueException::class)
     override fun arg2(): Int {
         val argumentTwo = currentInstruction[2].toInt()
-        if (arg1() == "constant" && argumentTwo in 0..32767) return argumentTwo
-        if (arg1() == "constant" && argumentTwo !in 0..32767) throw ConstantValueException("Illegal value at line $currentLine")
+        if (commandType() == CommandType.C_POP || commandType() == CommandType.C_PUSH) {
+            if (arg1() == "constant" && argumentTwo in 0..32767) return argumentTwo
+            if (arg1() == "constant" && argumentTwo !in 0..32767) throw ConstantValueException("Illegal value at line $currentLine")
+        }
         return argumentTwo
     }
 
