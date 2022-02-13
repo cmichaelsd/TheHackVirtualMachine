@@ -1,36 +1,45 @@
 package codeWriter.subroutines.stack
 
 import segment.Segment
+import kotlin.text.StringBuilder
 
-class PopImpl(fileName: String) :
-    AbstractStack(fileName),
-    Stack {
-    override fun create(segment: String, index: Int): List<String> {
-        val result = mutableListOf<String>()
+class PopImpl(fileName: String) : AbstractStack(fileName), Stack {
+    override fun create(segment: String, index: Int): String {
+        val result = StringBuilder()
+
         when(segment) {
             "pointer",
             "static",
             "temp" -> {
-                val address = getAddress(segment, index)
-                result.addAll(decrementStackPointer())
-                result.addAll(listOf("@$address", "M=D"))
+                decrementStackPointer(result)
+                result.appendLine("@${getAddress(segment, index)}")
+                result.appendLine("M=D")
             }
             "local",
             "argument",
             "this",
             "that" -> {
-                result.addAll(setAddressToContext(segment, index))
-                result.addAll(listOf("D=D+A", "@${Segment.getTranslation(segment)}", "M=D"))
-                result.addAll(decrementStackPointer())
-                result.addAll(listOf("@${Segment.getTranslation(segment)}", "A=M", "M=D"))
-                result.addAll(setAddressToContext(segment, index))
-                result.addAll(listOf("D=A-D", "@${Segment.getTranslation(segment)}", "M=D"))
+                setAddressToContext(segment, index, result)
+                result.appendLine("D=D+A")
+                result.appendLine("@${Segment.getTranslation(segment)}")
+                result.appendLine("M=D")
+                decrementStackPointer(result)
+                result.appendLine("@${Segment.getTranslation(segment)}")
+                result.appendLine("A=M")
+                result.appendLine("M=D")
+                setAddressToContext(segment, index, result)
+                result.appendLine("D=A-D")
+                result.appendLine("@${Segment.getTranslation(segment)}")
+                result.appendLine("M=D")
             }
         }
-        return result
+
+        return result.toString()
     }
 
-    private fun decrementStackPointer(): List<String> {
-        return listOf("@SP", "AM=M-1", "D=M")
+    private fun decrementStackPointer(stringBuilder: StringBuilder) {
+        stringBuilder.appendLine("@SP")
+        stringBuilder.appendLine("AM=M-1")
+        stringBuilder.appendLine("D=M")
     }
 }

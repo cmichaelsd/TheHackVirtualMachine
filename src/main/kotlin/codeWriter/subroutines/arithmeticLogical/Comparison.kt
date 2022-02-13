@@ -3,45 +3,44 @@ package codeWriter.subroutines.arithmeticLogical
 import java.util.concurrent.atomic.AtomicInteger
 
 class Comparison(private val sequence: AtomicInteger) : Operation {
-    override fun create(operation: String): List<String> {
+    override fun create(operation: String): String {
         sequence.set(sequence.get() + 1)
 
-        val result = mutableListOf<String>()
-        result.addAll(addressMemoryDecrement())
-        result.add("D=M")
-        result.addAll(addressMemoryDecrement())
-        result.add("D=M-D")
-        result.addAll(listOf(
-            "@COMP.${sequence.get()}.TRUE",
-            operation,
-            "@COMP.${sequence.get()}.FALSE",
-            "0;JMP",
-            "(COMP.${sequence}.TRUE)",
-        ))
-        result.addAll(stackPointerAddressSetToMemory())
-        result.add("M=-1")
-        result.addAll(incrementStackPointer())
-        result.addAll(listOf(
-            "@COMP.${sequence}.END",
-            "0;JMP",
-            "(COMP.${sequence}.FALSE)"
-        ))
-        result.addAll(stackPointerAddressSetToMemory())
-        result.add("M=0")
-        result.addAll(incrementStackPointer())
-        result.add("(COMP.${sequence}.END)")
-        return result
+        val result = StringBuilder()
+        addressMemoryDecrement(result)
+        result.appendLine("D=M")
+        addressMemoryDecrement(result)
+        result.appendLine("D=M-D")
+        result.appendLine("@COMP.${sequence.get()}.TRUE")
+        result.appendLine(operation)
+        result.appendLine("@COMP.${sequence.get()}.FALSE")
+        result.appendLine("0;JMP")
+        result.appendLine("(COMP.${sequence}.TRUE)")
+        stackPointerAddressSetToMemory(result)
+        result.appendLine("M=-1")
+        incrementStackPointer(result)
+        result.appendLine("@COMP.${sequence}.END")
+        result.appendLine("0;JMP")
+        result.appendLine("(COMP.${sequence}.FALSE)")
+        stackPointerAddressSetToMemory(result)
+        result.appendLine("M=0")
+        incrementStackPointer(result)
+        result.appendLine("(COMP.${sequence}.END)")
+        return result.toString()
     }
 
-    private fun addressMemoryDecrement(): List<String> {
-        return listOf("@SP", "AM=M-1")
+    private fun addressMemoryDecrement(stringBuilder: StringBuilder) {
+        stringBuilder.appendLine("@SP")
+        stringBuilder.appendLine("AM=M-1")
     }
 
-    private fun stackPointerAddressSetToMemory(): List<String> {
-        return listOf("@SP", "A=M")
+    private fun stackPointerAddressSetToMemory(stringBuilder: StringBuilder) {
+        stringBuilder.appendLine("@SP")
+        stringBuilder.appendLine("A=M")
     }
 
-    private fun incrementStackPointer(): List<String> {
-        return listOf("@SP", "M=M+1")
+    private fun incrementStackPointer(stringBuilder: StringBuilder) {
+        stringBuilder.appendLine("@SP")
+        stringBuilder.appendLine("M=M+1")
     }
 }

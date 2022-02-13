@@ -3,7 +3,7 @@ package segment
 import parser.Parsable
 
 object Segment : Parsable {
-    override val validCommand: List<String>  = listOf(
+    override val validCommand: Set<String>  = setOf(
         "argument",
         "local",
         "static",

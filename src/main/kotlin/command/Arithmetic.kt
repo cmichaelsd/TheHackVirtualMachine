@@ -1,7 +1,7 @@
 package command
 
 object Arithmetic : Command {
-    override val validCommand: List<String> = listOf(
+    override val validCommand: Set<String> = setOf(
         "add",
         "sub",
         "neg"

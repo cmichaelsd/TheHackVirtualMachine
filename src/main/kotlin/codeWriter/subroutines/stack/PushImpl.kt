@@ -1,32 +1,41 @@
 package codeWriter.subroutines.stack
 
-class PushImpl(fileName: String) :
-    AbstractStack(fileName),
-    Stack {
-    override fun create(segment: String, index: Int): List<String> {
-        val result = mutableListOf<String>()
+import kotlin.text.StringBuilder
+
+class PushImpl(fileName: String) : AbstractStack(fileName), Stack {
+    override fun create(segment: String, index: Int): String {
+        val result = StringBuilder()
+
         when(segment) {
             "pointer",
             "static",
             "temp" -> {
-                val address = getAddress(segment, index)
-                result.addAll(listOf("@$address", "D=M"))
+                result.appendLine("@${getAddress(segment, index)}")
+                result.appendLine("D=M")
             }
-            "constant" -> result.addAll(listOf("@$index", "D=A"))
+            "constant" -> {
+                result.appendLine("@$index")
+                result.appendLine("D=A")
+            }
             "local",
             "argument",
             "this",
             "that" -> {
-                result.addAll(setAddressToContext(segment, index))
-                result.addAll(listOf("D=D+A", "A=D", "D=M"))
+                setAddressToContext(segment, index, result)
+                result.appendLine("D=D+A")
+                result.appendLine("A=D")
+                result.appendLine("D=M")
             }
         }
-        result.addAll(setStackPointerMemoryToAddressAndDataToMemory())
-        result.addAll(incrementStackPointer())
-        return result
+
+        setStackPointerMemoryToAddressAndDataToMemory(result)
+        incrementStackPointer(result)
+
+        return result.toString()
     }
 
-    private fun incrementStackPointer(): List<String> {
-        return listOf("@SP", "M=M+1")
+    private fun incrementStackPointer(stringBuilder: StringBuilder) {
+        stringBuilder.appendLine("@SP")
+        stringBuilder.appendLine("M=M+1")
     }
 }

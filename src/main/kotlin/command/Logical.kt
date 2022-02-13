@@ -1,7 +1,7 @@
 package command
 
 object Logical : Command {
-    override val validCommand: List<String> = listOf(
+    override val validCommand: Set<String> = setOf(
         "eq",
         "gt",
         "lt",

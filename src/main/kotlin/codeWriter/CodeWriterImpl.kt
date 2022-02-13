@@ -7,20 +7,31 @@ import codeWriter.subroutines.stack.PopImpl
 import codeWriter.subroutines.stack.PushImpl
 import command.CommandType
 import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
-class CodeWriterImpl(outputFile: File) : CodeWriter {
+class CodeWriterImpl(private val outputFile: File) : CodeWriter {
     /**
-     * The name of the output file to be uses in assembly language generation.
+     * The name of the current file being written.
      */
-    private var fileName: String? = null // outputFile.nameWithoutExtension
+    private var _fileName: String? = null
 
+    /**
+     * A buffered writer responsible for writing all assembly code for the current file or directory.
+     */
     private val bufferedWriter = outputFile.bufferedWriter()
 
+    /**
+     * A tracker used to differentiate events when written into assembly language.
+     */
     private var sequence = AtomicInteger(-1)
 
+    private val fileName get() = _fileName!!
+
     init {
-        writeToOutputFile(listOf("@256", "D=A", "@SP", "M=D"))
+        initialize()
     }
 
     /**
@@ -29,7 +40,7 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
      * @param fileName the name for the compiled file
      */
     override fun setFileName(fileName: String) {
-        TODO("Not yet implemented")
+        this._fileName = fileName
     }
 
     /**
@@ -126,7 +137,25 @@ class CodeWriterImpl(outputFile: File) : CodeWriter {
         bufferedWriter.close()
     }
 
-    private fun writeToOutputFile(list: List<String>) {
-        list.forEach { bufferedWriter.appendLine(it) }
+    private fun initialize() {
+        val result = StringBuilder()
+        result.appendLine("// GENERATED HACK ASM FILE")
+        result.appendLine("// FILE NAME: ${outputFile.name}")
+        result.appendLine("// GENERATED AT: ${SimpleDateFormat.getInstance().format(Date())}")
+        result.appendLine()
+        result.appendLine("@256")
+        result.appendLine("D=A")
+        result.appendLine("@SP")
+        result.appendLine("M=D")
+        writeToOutputFile(result.toString())
+    }
+
+    @Throws(IOException::class)
+    private fun writeToOutputFile(assemblyString: String) {
+        try {
+            bufferedWriter.write(assemblyString)
+        } catch (e: IOException) {
+            throw e
+        }
     }
 }
