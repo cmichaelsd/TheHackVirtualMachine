@@ -51,6 +51,9 @@ object VirtualMachineTranslator {
                 CommandType.C_ARITHMETIC -> {
                     codeWriter.writeArithmetic(parserImpl.arg1())
                 }
+                CommandType.C_IF -> {
+
+                }
                 else -> {}
             }
         }

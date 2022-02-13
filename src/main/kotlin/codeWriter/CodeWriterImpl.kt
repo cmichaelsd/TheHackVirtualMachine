@@ -3,6 +3,7 @@ package codeWriter
 import codeWriter.subroutines.arithmeticLogical.Binomial
 import codeWriter.subroutines.arithmeticLogical.Comparison
 import codeWriter.subroutines.arithmeticLogical.Singular
+import codeWriter.subroutines.frames.Call
 import codeWriter.subroutines.stack.PopImpl
 import codeWriter.subroutines.stack.PushImpl
 import command.CommandType
@@ -148,6 +149,7 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
         result.appendLine("@SP")
         result.appendLine("M=D")
         writeToOutputFile(result.toString())
+//        writeToOutputFile(Call(sequence).create("Sys.init", 0))
     }
 
     @Throws(IOException::class)
