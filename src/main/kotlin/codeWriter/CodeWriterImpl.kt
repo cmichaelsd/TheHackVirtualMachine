@@ -143,18 +143,23 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
         bufferedWriter.close()
     }
 
+    override fun writeComment(s: String) {
+        writeToOutputFile("${System.lineSeparator()}// $s${System.lineSeparator()}")
+    }
+
     private fun initialize() {
         val result = StringBuilder()
         result.appendLine("// GENERATED HACK ASM FILE")
         result.appendLine("// FILE NAME: ${outputFile.name}")
         result.appendLine("// GENERATED AT: ${SimpleDateFormat.getInstance().format(Date())}")
         result.appendLine()
+        writeComment("initialization")
         result.appendLine("@256")
         result.appendLine("D=A")
         result.appendLine("@SP")
         result.appendLine("M=D")
         writeToOutputFile(result.toString())
-//        writeToOutputFile(Call(sequence).create("Sys.init", 0))
+        writeToOutputFile(Call(sequence).create("Sys.init", 0))
     }
 
     @Throws(IOException::class)

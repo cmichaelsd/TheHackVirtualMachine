@@ -6,15 +6,15 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class Call(private val sequence: AtomicInteger) {
     fun create(functionName: String, nArgs: Int): String {
-        val returnLabel = "RETURN${sequence.incrementAndGet()}"
+        val returnLabel = "RETURN.${sequence.incrementAndGet()}"
 
         val result = StringBuilder()
         val pushPairs = listOf(
             Pair("@$returnLabel", "D=A"),
-            Pair("@LCL", "D=M"),
-            Pair("@ARG", "D=M"),
-            Pair("@THIS", "D=M"),
-            Pair("@THAT", "D=M")
+            Pair("@LCL",          "D=M"),
+            Pair("@ARG",          "D=M"),
+            Pair("@THIS",         "D=M"),
+            Pair("@THAT",         "D=M")
         )
 
         for (pair in pushPairs) {
@@ -41,8 +41,8 @@ class Call(private val sequence: AtomicInteger) {
         result.appendLine("@LCL")
         result.appendLine("M=D")
 
-        result.appendLine(GoTo.create(functionName))
-        result.appendLine(Label.create(returnLabel))
+        result.append(GoTo.create(functionName))
+        result.append(Label.create(returnLabel))
         return result.toString()
     }
 

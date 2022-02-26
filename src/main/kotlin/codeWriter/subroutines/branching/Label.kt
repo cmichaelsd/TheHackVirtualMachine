@@ -2,6 +2,6 @@ package codeWriter.subroutines.branching
 
 object Label : Branch {
     override fun create(label: String): String {
-        return StringBuilder().appendLine("($label)").toString()
+        return "($label)${System.lineSeparator()}"
     }
 }

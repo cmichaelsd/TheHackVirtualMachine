@@ -12,5 +12,6 @@ interface CodeWriter {
     fun writeFunction(functionName: String, nVars: Int)
     fun writeCall(functionName: String, nArgs: Int)
     fun writeReturn()
+    fun writeComment(s: String)
     fun close()
 }

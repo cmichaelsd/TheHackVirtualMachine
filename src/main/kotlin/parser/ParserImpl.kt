@@ -88,6 +88,7 @@ class ParserImpl(file: File) : Parser {
             GoTo.has(command)       -> GoTo.getType()
             If.has(command)         -> If.getType()
             Function.has(command)   -> Function.getType()
+            Call.has(command)       -> Call.getType()
             Return.has(command)     -> Return.getType()
             else                    -> throw CommandTypeException("Illegal command type token at line $currentLine")
         }

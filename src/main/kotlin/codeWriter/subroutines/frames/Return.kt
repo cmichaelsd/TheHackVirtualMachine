@@ -7,7 +7,7 @@ object Return {
         // FRAME = LCL
         result.appendLine("@LCL")
         result.appendLine("D=M")
-        result.appendLine("@FRAME")
+        result.appendLine("@R13")
         result.appendLine("M=D")
 
         // RETURN = *(FRAME-5)
@@ -15,7 +15,7 @@ object Return {
         result.appendLine("D=D-A")
         result.appendLine("A=D")
         result.appendLine("D=M")
-        result.appendLine("@RETURN")
+        result.appendLine("@R14")
         result.appendLine("M=D")
 
         // *ARG = POP
@@ -34,25 +34,25 @@ object Return {
         result.appendLine("M=D")
 
         val pairAssign = listOf(
-            Pair(1, "THAT"),
-            Pair(2, "THIS"),
-            Pair(3, "ARG"),
-            Pair(4, "LCL")
+            Pair("@1", "@THAT"),
+            Pair("@2", "@THIS"),
+            Pair("@3", "@ARG"),
+            Pair("@4", "@LCL")
         )
 
         for (pair in pairAssign) {
-            result.appendLine("@FRAME")
+            result.appendLine("@R13")
             result.appendLine("D=M")
-            result.appendLine("@${pair.first}")
+            result.appendLine(pair.first)
             result.appendLine("D=D-A")
             result.appendLine("A=D")
             result.appendLine("D=M")
-            result.appendLine("@${pair.second}")
+            result.appendLine(pair.second)
             result.appendLine("M=D")
         }
 
         // JMP TO CALLER
-        result.appendLine("@RETURN")
+        result.appendLine("@R14")
         result.appendLine("A=M")
         result.appendLine("0;JMP")
         return result.toString()
