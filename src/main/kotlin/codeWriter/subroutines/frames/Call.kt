@@ -2,6 +2,7 @@ package codeWriter.subroutines.frames
 
 import codeWriter.subroutines.branching.GoTo
 import codeWriter.subroutines.branching.Label
+import codeWriter.subroutines.stack.StackImpl
 import java.util.concurrent.atomic.AtomicInteger
 
 class Call(private val sequence: AtomicInteger) {
@@ -22,7 +23,7 @@ class Call(private val sequence: AtomicInteger) {
             result.appendLine(pair.first)
             result.appendLine(pair.second)
             setDataToMemory(result)
-            incrementStackPointer(result)
+            StackImpl.incrementStackPointer(result)
         }
 
         // ARG = SP - nArgs - 5
@@ -50,10 +51,5 @@ class Call(private val sequence: AtomicInteger) {
         stringBuilder.appendLine("@SP")
         stringBuilder.appendLine("A=M")
         stringBuilder.appendLine("M=D")
-    }
-
-    private fun incrementStackPointer(stringBuilder: StringBuilder) {
-        stringBuilder.appendLine("@SP")
-        stringBuilder.appendLine("M=M+1")
     }
 }

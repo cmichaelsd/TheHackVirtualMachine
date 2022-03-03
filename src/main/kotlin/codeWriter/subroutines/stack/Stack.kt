@@ -1,5 +1,6 @@
 package codeWriter.subroutines.stack
 
 interface Stack {
-    fun create(segment: String, index: Int): String
+    fun incrementStackPointer(stringBuilder: StringBuilder)
+    fun decrementStackPointer(stringBuilder: StringBuilder)
 }

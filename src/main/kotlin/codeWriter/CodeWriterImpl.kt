@@ -2,7 +2,7 @@ package codeWriter
 
 import codeWriter.subroutines.arithmeticLogical.Binomial
 import codeWriter.subroutines.arithmeticLogical.Comparison
-import codeWriter.subroutines.arithmeticLogical.Singular
+import codeWriter.subroutines.arithmeticLogical.Unary
 import codeWriter.subroutines.branching.GoTo
 import codeWriter.subroutines.branching.If
 import codeWriter.subroutines.branching.Label
@@ -61,8 +61,8 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
             "and" -> writeToOutputFile(Binomial.create("M=D&M"))
             "or"  -> writeToOutputFile(Binomial.create("M=D|M"))
 
-            "neg" -> writeToOutputFile(Singular.create("M=-M"))
-            "not" -> writeToOutputFile(Singular.create("M=!M"))
+            "neg" -> writeToOutputFile(Unary.create("M=-M"))
+            "not" -> writeToOutputFile(Unary.create("M=!M"))
 
             "eq"  -> writeToOutputFile(Comparison(sequence).create("D;JEQ"))
             "lt"  -> writeToOutputFile(Comparison(sequence).create("D;JLT"))

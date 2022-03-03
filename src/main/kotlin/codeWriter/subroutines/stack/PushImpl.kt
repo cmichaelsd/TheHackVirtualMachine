@@ -2,10 +2,9 @@ package codeWriter.subroutines.stack
 
 import kotlin.text.StringBuilder
 
-class PushImpl(fileName: String) : AbstractStack(fileName), Stack {
+class PushImpl(fileName: String) : AbstractOperation(fileName) {
     override fun create(segment: String, index: Int): String {
         val result = StringBuilder()
-
         when(segment) {
             "pointer",
             "static",
@@ -27,15 +26,10 @@ class PushImpl(fileName: String) : AbstractStack(fileName), Stack {
                 result.appendLine("D=M")
             }
         }
-
-        setStackPointerMemoryToAddressAndDataToMemory(result)
-        incrementStackPointer(result)
-
+        result.appendLine("@SP")
+        result.appendLine("A=M")
+        result.appendLine("M=D")
+        StackImpl.incrementStackPointer(result)
         return result.toString()
-    }
-
-    private fun incrementStackPointer(stringBuilder: StringBuilder) {
-        stringBuilder.appendLine("@SP")
-        stringBuilder.appendLine("M=M+1")
     }
 }

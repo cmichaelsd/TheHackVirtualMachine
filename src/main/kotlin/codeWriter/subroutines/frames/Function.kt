@@ -1,6 +1,7 @@
 package codeWriter.subroutines.frames
 
 import codeWriter.subroutines.branching.Label
+import codeWriter.subroutines.stack.StackImpl
 
 object Function {
     fun create(functionName: String, nVars: Int): String {
@@ -10,8 +11,7 @@ object Function {
             result.appendLine("@SP")
             result.appendLine("A=M")
             result.appendLine("M=0")
-            result.appendLine("@SP")
-            result.appendLine("M=M+1")
+            StackImpl.incrementStackPointer(result)
         }
         return result.toString()
     }

@@ -1,13 +1,13 @@
 package codeWriter.subroutines.arithmeticLogical
 
-object Singular : Operation {
+import codeWriter.subroutines.stack.StackImpl
+
+object Unary : Operation {
     override fun create(operation: String): String {
         val result = StringBuilder()
-        result.appendLine("@SP")
-        result.appendLine("AM=M-1")
+        StackImpl.decrementStackPointer(result)
         result.appendLine(operation)
-        result.appendLine("@SP")
-        result.appendLine("M=M+1")
+        StackImpl.incrementStackPointer(result)
         return result.toString()
     }
 }

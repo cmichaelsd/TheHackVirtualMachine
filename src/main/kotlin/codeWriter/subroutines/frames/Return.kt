@@ -1,5 +1,7 @@
 package codeWriter.subroutines.frames
 
+import codeWriter.subroutines.stack.StackImpl
+
 object Return {
     fun create(): String {
         val result = StringBuilder()
@@ -19,9 +21,7 @@ object Return {
         result.appendLine("M=D")
 
         // *ARG = POP
-        result.appendLine("@SP")
-        result.appendLine("M=M-1")
-        result.appendLine("A=M")
+        StackImpl.decrementStackPointer(result)
         result.appendLine("D=M")
         result.appendLine("@ARG")
         result.appendLine("A=M")

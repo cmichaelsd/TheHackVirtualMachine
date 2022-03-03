@@ -2,6 +2,7 @@ package codeWriter.subroutines.arithmeticLogical
 
 import codeWriter.subroutines.branching.GoTo
 import codeWriter.subroutines.branching.Label
+import codeWriter.subroutines.stack.StackImpl
 import java.util.concurrent.atomic.AtomicInteger
 
 class Comparison(private val sequence: AtomicInteger) : Operation {
@@ -13,38 +14,28 @@ class Comparison(private val sequence: AtomicInteger) : Operation {
         val endLabel   = "COMP.${sequence.get()}.END"
 
         val result = StringBuilder()
-        addressMemoryDecrement(result)
+        StackImpl.decrementStackPointer(result)
         result.appendLine("D=M")
-        addressMemoryDecrement(result)
+        StackImpl.decrementStackPointer(result)
         result.appendLine("D=M-D")
         result.appendLine("@$trueLabel")
         result.appendLine(operation)
         result.append(GoTo.create(falseLabel))
         result.append(Label.create(trueLabel))
-        stackPointerAddressSetToMemory(result)
+        setAddressToStackPointer(result)
         result.appendLine("M=-1")
-        incrementStackPointer(result)
+        StackImpl.incrementStackPointer(result)
         result.append(GoTo.create(endLabel))
         result.append(Label.create(falseLabel))
-        stackPointerAddressSetToMemory(result)
+        setAddressToStackPointer(result)
         result.appendLine("M=0")
-        incrementStackPointer(result)
+        StackImpl.incrementStackPointer(result)
         result.append(Label.create(endLabel))
         return result.toString()
     }
 
-    private fun addressMemoryDecrement(stringBuilder: StringBuilder) {
-        stringBuilder.appendLine("@SP")
-        stringBuilder.appendLine("AM=M-1")
-    }
-
-    private fun stackPointerAddressSetToMemory(stringBuilder: StringBuilder) {
+    private fun setAddressToStackPointer(stringBuilder: StringBuilder) {
         stringBuilder.appendLine("@SP")
         stringBuilder.appendLine("A=M")
-    }
-
-    private fun incrementStackPointer(stringBuilder: StringBuilder) {
-        stringBuilder.appendLine("@SP")
-        stringBuilder.appendLine("M=M+1")
     }
 }
