@@ -9,8 +9,7 @@ import codeWriter.subroutines.branching.Label
 import codeWriter.subroutines.frames.Call
 import codeWriter.subroutines.frames.Function
 import codeWriter.subroutines.frames.Return
-import codeWriter.subroutines.stack.PopImpl
-import codeWriter.subroutines.stack.PushImpl
+import codeWriter.subroutines.stack.StackImpl
 import command.CommandType
 import java.io.File
 import java.io.IOException
@@ -78,8 +77,8 @@ class CodeWriterImpl(private val outputFile: File) : CodeWriter {
      * @param index       which index in the stack arithmetic to emulate
      */
     override fun writePushPop(commandType: CommandType, segment: String, index: Int) {
-        if (commandType == CommandType.C_PUSH) writeToOutputFile(PushImpl(fileName).create(segment, index))
-        if (commandType == CommandType.C_POP) writeToOutputFile(PopImpl(fileName).create(segment, index))
+        if (commandType == CommandType.C_PUSH) writeToOutputFile(StackImpl.push(fileName, segment, index))
+        if (commandType == CommandType.C_POP) writeToOutputFile(StackImpl.pop(fileName, segment, index))
     }
 
     /**
